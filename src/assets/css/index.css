@@ -1,0 +1,40 @@
+.error-msg{
+    color:red;
+    text-align: center;
+    font-size: 18px
+}
+
+.am-tabs-tab-bar-wrap{
+    bottom:0;
+    position:fixed;
+    width:100%
+}
+
+.list-wrap{
+    margin-bottom:50px;
+    margin-top:50px;
+}
+
+.top-bar{
+    z-index:10;
+    position:fixed;
+    top:0px;
+    width:100%
+}
+
+
+.chat-page .chat-me .am-list-extra{
+    flex-basis:auto
+}
+
+.chat-page .chat-me .am-list-content{
+    padding-right:15px;
+    text-align: right;
+}
+.am-tab-bar{
+    top:650px;
+    position:fixed;
+    width:100%;
+    height:50px;
+}
+
