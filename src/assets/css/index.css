@@ -22,7 +22,6 @@
     width:100%
 }
 
-
 .chat-page .chat-me .am-list-extra{
     flex-basis:auto
 }
@@ -31,15 +30,12 @@
     padding-right:15px;
     text-align: right;
 }
+
 .am-tab-bar{
     bottom:-7px;
     position:fixed;
     width:100%;
     height:50px;
-}
-
-.chat-display{
-
 }
 
 .chat-navbar{
