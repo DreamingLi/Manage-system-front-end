@@ -32,9 +32,19 @@
     text-align: right;
 }
 .am-tab-bar{
-    top:650px;
+    bottom:-7px;
     position:fixed;
     width:100%;
     height:50px;
 }
 
+.chat-display{
+
+}
+
+.chat-navbar{
+    position:fixed;
+    z-index: 10;
+    width:100%;
+    top:0px;
+}

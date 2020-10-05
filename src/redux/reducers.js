@@ -13,6 +13,7 @@ import {
 } from './action-types'
 
 const initUser = {
+  user_id:'',
   username: '', 
   type: '', 
   msg: '', 
@@ -64,7 +65,11 @@ function chat(state=initChat,action){
         unReadCount:0
       }
     case RECEIVE_MSG:
-      return 
+      return {
+        users: state.users,
+        chatMsgs: [...state.chatMsgs, action.data],
+        unReadCount:0
+      }
     default:
       return state
   }

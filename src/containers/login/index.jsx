@@ -6,7 +6,6 @@ import {
     InputItem,
     WhiteSpace,
     Button,
-    Icon
  } from 'antd-mobile'
 import Logo from '../../components/logo/index.js'
 
@@ -38,8 +37,6 @@ import {login} from '../../redux/actions'
         this.props.login(this.state)
     }
 
-
-
     render() {
         const {user_id,type} = this.props.user 
         const path = type==="manager" ? "/manager" : "/employee"
@@ -48,7 +45,6 @@ import {login} from '../../redux/actions'
         }
         return (
             <div>
-            
             <NavBar 
             mode="dark"
             onLeftClick={() => console.log('onLeftClick')}

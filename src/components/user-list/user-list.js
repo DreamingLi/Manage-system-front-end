@@ -20,11 +20,10 @@ const Body = Card.Body
                 <WingBlank >
                     {
                         userList.map(user=>(
-                            <div key = {user.user_id}>
-                                
+                            <div key = {user.id}>      
                                     <div>
                                         <WhiteSpace />
-                                        <Card onClick={()=> this.props.history.push(`/chat/${user.user_id}`)}>
+                                        <Card onClick={()=> this.props.history.push(`/chat/${user.id}`)}>
                                             <Header thumb={require(`../../assets/images/${user.avatar}.jpg`)} extra={user.username} />
                                             <Body>
                                                 <div>Type: {user.type}</div>

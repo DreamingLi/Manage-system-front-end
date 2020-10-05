@@ -3,7 +3,7 @@ import {List,Grid} from 'antd-mobile'
 import PropTypes from 'prop-types';
 export default class HeaderSelector extends Component {
     state = {
-        icon : null
+        avatar : null
     }
     
     static propTypes = {
@@ -13,17 +13,17 @@ export default class HeaderSelector extends Component {
     constructor(){
         super()
         this.headerList= []
-        for( let i = 0; i<6;i++){
+        for( let i = 0; i<4;i++){
             this.headerList.push({
                 text:'avatar'+(i+1),
-                icon: require(`../../assets/images/ava${i+1}.jpg`)
+                avatar: require(`../../assets/images/avatar${i+1}.jpg`)
             })
         }
     }
     
-    handleClick = ({text,icon})=>{
+    handleClick = ({text,avatar})=>{
         this.setState({
-            icon:icon
+            avatar:avatar
         })
         this.props.setHeader(text)
     }
@@ -31,7 +31,7 @@ export default class HeaderSelector extends Component {
     
     render() {
 
-        const listHeader = this.state.icon ? (<div><div >selected: </div><img src={this.state.icon} alt="avatar"></img></div>) : "select an avatar"
+        const listHeader = this.state.avatar ? (<div><div >selected: </div><img src={this.state.avatar} alt="avatar"></img></div>) : "select an avatar"
         return (
             <List
                 renderHeader={ ()=> listHeader}
@@ -39,7 +39,7 @@ export default class HeaderSelector extends Component {
                 <Grid data={this.headerList}
                     renderItem={dataItem => (
                         <div style={{ padding: '3px' }}>
-                            <img src={dataItem.icon} style={{ width: '90px', height: '90px' }} alt="" />
+                            <img src={dataItem.avatar} style={{ width: '90px', height: '90px' }} alt="" />
                             <div style={{ color: '#888', fontSize: '14px', marginTop: '12px' }}></div>
                         </div>
                     )}

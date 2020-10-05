@@ -7,7 +7,7 @@ import {
   RECEIVE_USER,
   RECEIVE_USER_LIST,
   RESET_USER,
-  RECEIVE_MSG_LIST,
+  RECEIVE_MSG_LIST, 
   RECEIVE_MSG
 } from './action-types'
 import {
@@ -17,31 +17,43 @@ import {
   reqUser,
   reqUserList,
   reqChatMsgList,
-  reqReadMsg
+  // reqReadMsg
 } from '../api'
 
-const initIO = ()=>{
-  if(!io.socket){
-    io.socket = io('ws://127.0.0.1:8000/chat')
-    io.socket.onmessage = (data)=>{
-      console.log(JSON.parse(data.data))
+
+const receiveMsg = msg => ({type: RECEIVE_MSG, data: msg})
+
+const initIO = (dispatch,user_id) =>{
+    if(!io.socket){
+      io.socket = new io('ws://127.0.0.1:8000/chat')
+      io.socket.onmessage = (data) =>{
+        dispatch(receiveMsg(JSON.parse(data.data)))
+      }
+      io.socket.onopen = ()=>{
+        io.socket.send(str2jsonInit(user_id,250))  
+        console.log("server channel connected")
+      }
+
+      io.socket.close = ()=>{
+        console.log("disconnected")
+      }
     }
-  }
 }
 
-const str2json = (from,to,content) => `{"from":"${from}","to":"${to}","content":"${content}"}`
 
-const getMsgList = async (dispatch) =>{
-  initIO()
+const str2jsonMsg = (from,to,content,code) => `{"from":"${from}","to":"${to}","content":"${content}","code":"${code}"}`
+
+const str2jsonInit = (id,code) => `{"id":"${id}","code":"${code}"}`
+
+const getMsgList = async (dispatch,user_id) =>{
   const response = await reqChatMsgList()
-  const result = response.data
-  if(result.code===0){
+  const result = JSON.parse(response.data)
+  if(result.code===200){
+    initIO(dispatch,user_id)
     const { users , chatMsgs } = result.data
     dispatch(receiveMsgList({users,chatMsgs}))
   }
 }
-
-
 
 const failToast = (msg) => { Toast.fail(msg, 2);}
 
@@ -57,6 +69,8 @@ export const receiveUserList = (userList) => ({type:RECEIVE_USER_LIST,data:userL
 
 const receiveMsgList = ({users,chatMsgs})=> ({type:RECEIVE_MSG_LIST,data:{users,chatMsgs}})
 
+
+
 export const register = user => {
   const {username, password, comfirm, type} = user
 
@@ -67,9 +81,8 @@ export const register = user => {
   }
   return async dispatch => {
     const response = await reqRegister({username, password, type})
-    console.log(response.data)
     if(response.data.code===200) {
-      getMsgList(dispatch)
+      getMsgList(dispatch,response.data.user_id)
       dispatch(authSuccess(response.data))
     } else {     
         failToast(response.data.msg)
@@ -88,9 +101,11 @@ export const login = user => {
     return errorMsg('password required')
   }
   return async dispatch => {
+    
     const response = await reqLogin(user)
     if(response.data.code===200) {
-      // getMsgList(dispatch)
+      getMsgList(dispatch,response.data.user_id)
+
       dispatch(authSuccess(response.data))
     } else { 
       failToast(response.data.msg)
@@ -116,7 +131,8 @@ export const getUser = () =>{
       const response = await reqUser()
       const result = response.data
       if(result.code===200){
-        getMsgList(dispatch)
+        getMsgList(dispatch,result.data.user_id)
+
         dispatch(receiveUser(result.data))
       }else{
         dispatch(resetUser(result.msg))
@@ -137,7 +153,9 @@ export const getUserList = ()=>{
 export const sendMsg = ({from,to,content}) =>{
     return dispatch =>{
       // let msg = [from,to,content].join("_")
-      io.socket.send(str2json(from,to,content))
+      io.socket.send(str2jsonMsg(from,to,content,200))
+
   }
 }
+
 

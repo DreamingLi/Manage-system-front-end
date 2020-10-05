@@ -5,7 +5,7 @@ import EmployeeInfo from '../employee-info/index.jsx'
 import {connect} from "react-redux"
 import Cookies from 'js-cookie'
 import { getRedirectTo } from '../../utils/index.js'
-import { getUser } from '../../redux/actions'
+import { getUser,getUserList } from '../../redux/actions'
 import Manager from '../manager/index.jsx'
 import Employee from '../employee/index.jsx'
 import Message  from '../message'
@@ -16,7 +16,7 @@ import NavFooter from '../../components/nav-footer/index.jsx'
 import Task from '../task/index.jsx'
 import Chat from '../chat/index.js'
 
-class index extends Component {
+class Index extends Component {
     navList = [
         {
             path:"/employee",
@@ -55,13 +55,15 @@ class index extends Component {
         },
 
     ]
-    // componentDidMount(){
-    //     let userid = Cookies.get('userid')
-    //     const {user_id} = this.props.user
-    //     if ( userid && !user_id){
-    //         this.props.getUser()
-    //     }
-    // }
+    componentDidMount(){
+        let userid = Cookies.get('userid')
+        const {user_id} = this.props.user
+        if ( userid && !user_id){
+            this.props.getUser()
+           
+        }
+        this.props.getUserList()
+    }
 
     render() {
         //get userid from cookies
@@ -76,7 +78,7 @@ class index extends Component {
         const {user} = this.props
         // console.log(user) {user_id: "0", username: "test", type: "employee", avatar: "ava0", position: "manager", …}
         if(!user.user_id){
-            return <Redirect to="/login"/>
+            return null
         }
         else
         {
@@ -122,5 +124,5 @@ class index extends Component {
 }
 export default  connect(
     state =>({user: state.user}),
-    {getUser}
-)(index)
+    {getUser,getUserList}
+)(Index)

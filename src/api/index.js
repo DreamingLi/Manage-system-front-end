@@ -12,6 +12,6 @@ export const reqUser = () => ajax('/api/user/info')
 export const reqUserList = () => ajax('/api/user/list')
 
 
-export const reqChatMsgList = () => ajax('/api/chat/list')
+export const reqChatMsgList = () => ajax('/api/chat/listMsg')
 
 export const reqReadMsg = (from) => ajax('api/chat/read',{from},"POST")

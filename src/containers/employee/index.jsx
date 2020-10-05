@@ -4,9 +4,9 @@ import {getUserList} from '../../redux/actions'
 import UserList from '../../components/user-list/user-list.js'
 
  class Index extends Component {
-     componentDidMount(){
-         this.props.getUserList()
-     }
+    //  componentDidMount(){
+    //      this.props.getUserList()
+    //  }
 
     render() {
         return (

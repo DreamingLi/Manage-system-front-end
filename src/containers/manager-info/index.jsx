@@ -8,9 +8,7 @@ import { Redirect } from 'react-router-dom'
 
 class Index extends Component {
     state = {
-        username:'',
         position:'manager',
-        position_type:"",
         motto:'',
         
     }
@@ -21,9 +19,9 @@ class Index extends Component {
         })
     }
 
-    setHeader = (header)=>{
+    setHeader = (avatar)=>{
         this.setState({
-            header
+            avatar
         })
     }
 
@@ -43,7 +41,6 @@ class Index extends Component {
                     Manager Info
                 </NavBar>
                 <HeaderSelect setHeader={this.setHeader}/>
-                <InputItem onChange={ val =>{this.handleChange('username',val)}}>Name: </InputItem>
                 <InputItem onChange={ val =>{this.handleChange('position_type',val)}}>Position: </InputItem>
                 <TextareaItem title="motto" rows={3} onChange={ val =>{this.handleChange('motto',val)}} >Motto: </TextareaItem>
                 <Button type='primary' onClick={this.save}> S&nbsp;A&nbsp;V&nbsp;E </Button>
