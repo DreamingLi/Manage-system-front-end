@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { NavBar, List, InputItem } from 'antd-mobile'
+import { NavBar, List, InputItem, Icon } from 'antd-mobile'
 import { sendMsg} from '../../redux/actions'
 
 const Item = List.Item
@@ -34,6 +34,13 @@ class Index extends Component {
     handleKey = e =>{
         console.log(e)
     }
+
+    componentDidMount(){
+        window.scrollTo(0,document.body.scrollHeight)
+    }
+    componentDidUpdate(){
+        window.scrollTo(0,document.body.scrollHeight)
+    }
     render() {
  
         const { user } = this.props
@@ -49,9 +56,13 @@ class Index extends Component {
 
         return ( 
             <div className="chat-page">
-                <NavBar className = "chat-navbar">{target.username}</NavBar>
+                <NavBar 
+                icon={<Icon type="left" />}
+                className = "chat-navbar"
+                onLeftClick={on => this.props.history.goBack()}
+                >{target.username}</NavBar>
                 <div className="chat-display">
-                    <List  >
+                    <List  style={{marginTop:45,marginBottom:45}}>
                         {
                             msgs.map( (msg , index) =>{
                                 if(parseInt(msg.to) === user.user_id){ 

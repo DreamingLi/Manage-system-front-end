@@ -51,7 +51,7 @@ function userList (state=initUserList,action){
 
 const initChat = {
   users:{},
-  chatMsg:[],
+  chatMsgs:[],
   unReadCount:0
 }
 
